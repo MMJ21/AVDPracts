@@ -26,4 +26,8 @@ prop_MaxLe :: Int -> Int -> Property
 prop_MaxLe x y = x <= y ==> max x y == y
 
 prop_Ordered :: Int -> [Int] -> Property
-prop_Ordered x xs = myOrdered xs ==> myOrdered (myInsert x xs)
+prop_Ordered x xs = myOrdered xs ==> classify (null xs) "trivial" $ myOrdered (myInsert x xs)
+
+prop_DoubleCycle :: [Int] -> Int -> Property
+prop_DoubleCycle xs n = not (null xs) && n >= 0 ==>
+    take n (cycle xs) == take n (cycle (xs ++ xs))  
